@@ -184,7 +184,7 @@ Representa un plan de viaje creado por el usuario:
 Primera llamada:
 
 ```
-GET http://localhost:3000/api/countries/COL
+GET http://localhost:3000/api/countries/ATG
 ```
 
 Resultado esperado: la API debería consultar RestCountries y luego guardar el país.
@@ -194,7 +194,7 @@ Resultado esperado: la API debería consultar RestCountries y luego guardar el p
 Segunda llamada:
 
 ```
-GET http://localhost:3000/api/countries/COL
+GET http://localhost:3000/api/countries/ATG
 ```
 
 Resultado esperado: ahora el país debería devolverse desde MongoDB.
