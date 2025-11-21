@@ -262,7 +262,7 @@ Respuesta esperada:
 403 Forbidden – No autorizado. Proporcione x-api-key.
 ```
 
-B. Con token correcto → debe funcionar
+B. Con token correcto funciona
 
 Header requerido:
 
