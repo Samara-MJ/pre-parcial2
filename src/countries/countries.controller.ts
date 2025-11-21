@@ -15,4 +15,3 @@ export class CountriesController {
     return this.countriesService.findByCode(code);
   }
 }
-

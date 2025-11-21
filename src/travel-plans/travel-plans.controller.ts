@@ -1,7 +1,8 @@
+// src/travel-plans/travel-plans.controller.ts
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { TravelPlansService } from './travel-plans.service';
 import { CreateTravelPlanDto } from './dto/create-travel-plan.dto';
-import { TravelPlan } from './schemas/travel-plan.schema';
+import { TravelPlan } from 'src/countries/schemas/travel-plan.schema';
 
 @Controller('travel-plans')
 export class TravelPlansController {

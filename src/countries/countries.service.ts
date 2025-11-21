@@ -1,8 +1,7 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Country, CountryDocument } from './schemas/country.schema';
-import { COUNTRY_INFO_PROVIDER } from './countries.module';
 import { RestCountriesProvider } from './providers/rest-countries.provider';
 
 @Injectable()
@@ -10,7 +9,6 @@ export class CountriesService {
   constructor(
     @InjectModel(Country.name)
     private readonly countryModel: Model<CountryDocument>,
-    @Inject(COUNTRY_INFO_PROVIDER)
     private readonly restCountries: RestCountriesProvider,
   ) {}
 

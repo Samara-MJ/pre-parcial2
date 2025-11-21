@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 import {
   TravelPlan,
   TravelPlanDocument,
-} from './schemas/travel-plan.schema';
+} from '../countries/schemas/travel-plan.schema';
 import { CreateTravelPlanDto } from './dto/create-travel-plan.dto';
 import { CountriesService } from '../countries/countries.service';
 
@@ -58,4 +58,3 @@ export class TravelPlansService {
     return plan;
   }
 }
-
