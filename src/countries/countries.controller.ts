@@ -17,7 +17,8 @@ export class CountriesController {
   }
   @UseGuards(ApiKeyGuard)
   @Delete(':code')
-  removeByCode(@Param('code') code: string) {
-    return this.countriesService.removeByCode(code);
+  async removeByCode(@Param('code') code: string) {
+    await this.countriesService.removeByCode(code);
+    return { message: 'Pais ${code.toUpperCase()} borrado del cache' };
   }
 }

@@ -219,4 +219,61 @@ Body:
 
 Resultado esperado: se crea un documento nuevo en MongoDB con un id único.
 
+## 7. Extensión de la API
 
+ Se amplio el modulo de Countres al agregar un nuevo endpoint de borrado el cual permite eliminar un pais almacenado en la cache local (MongoDB).Esta funcionalidad no existía en la versión original de la API, por lo que fue necesario modificar el CountriesModule para incluir el modelo de TravelPlans y permitir que el servicio de países verificara si existían planes asociados antes de permitir el borrado. También se añadió un método nuevo en el CountriesService encargado de validar la existencia del país, revisar posibles dependencias y ejecutar la eliminación cuando las condiciones lo permiten.
+
+Tambien se implementó un mecanismo de autorización para proteger el nuevo endpoint. Entonces se creo un gurad que valida la presencia de un token en el header de la peticion. Solo se aplico al endpoint de borrado, evitando afectar,  afectar el resto de funcionalidades.
+
+### 7.1 Funcionamiento del enpoint 
+
+1. Funcionamiento del endpoint protegido
+
+El endpoint DELETE /countries/:alpha3Code permite borrar un país almacenado en la caché local de MongoDB. Antes de ejecutar el borrado, la API realiza tres validaciones:
+
+Verifica que el país exista en la colección countries.
+
+Revisa si existen planes de viaje asociados a ese país en la colección travelplans. Si existen, el borrado se bloquea.
+
+Requiere que la petición incluya el header x-api-key con un token válido.
+
+Solo si todas las condiciones se cumplen, el país se elimina y la API responde con un mensaje de éxito.
+
+2. Funcionamiento del guard de autorización
+
+El guard es una clase que intercepta la petición antes de llegar al controlador. Su trabajo es revisar si la solicitud incluye el header x-api-key y si su valor coincide con el token configurado en el guard.
+
+Si el header no existe o el token es incorrecto,entonces el guard interrumpe la petición y responde con 403 Forbidden.
+
+Si el token es válido entonces, la petición continúa hacia el controlador.
+
+Este guard se aplica únicamente al endpoint DELETE usando el decorador @UseGuards(ApiKeyGuard), lo que permite que el resto de la API continúe siendo pública.
+
+### 7.2 Validaciones
+
+A. Sin token → debe fallar
+
+```
+DELETE http://localhost:3000/api/countries/ITA
+```
+
+Respuesta esperada:
+```
+403 Forbidden – No autorizado. Proporcione x-api-key.
+```
+
+B. Con token correcto → debe funcionar
+
+Header requerido:
+
+```
+x-api-key: PREPARCIAL2025
+```
+
+C. Intentar borrar país inexistente
+
+Debe responder 404.
+
+D. Intentar borrar país con planes asociados
+
+Debe responder 400.

@@ -8,17 +8,14 @@ import { Model } from 'mongoose';
 import { Country, CountryDocument } from './schemas/country.schema';
 import { RestCountriesProvider } from './providers/rest-countries.provider';
 import { TravelPlan, TravelPlanDocument } from './schemas/travel-plan.schema';
-import { TravelPlansService } from 'src/travel-plans/travel-plans.service';
 
 @Injectable()
 export class CountriesService {
   constructor(
     @InjectModel(Country.name)
     private readonly countryModel: Model<CountryDocument>,
-
     @InjectModel(TravelPlan.name)
     private readonly travelPlanModel: Model<TravelPlanDocument>,
-    private readonly travelPlanService: TravelPlansService,
     private readonly restCountries: RestCountriesProvider,
   ) {}
 
